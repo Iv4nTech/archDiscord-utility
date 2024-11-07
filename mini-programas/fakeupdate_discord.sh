@@ -9,6 +9,15 @@ pkill Discord
 
 version=$(cat -n wget-log | fold -w 150 | grep 'location' | cut -d '/' -f6)
 
+echo -n "¿Quieres ver el comando que se va a ejecutar antes de ejecutarlo con sudo? (S/n): "
+read verComando
+
+verComando=${verComando:-Y}
+
+if [ "$verComando" = "Y" ] ; then 
+echo -e "\n \033[0;33msudo sed -i "3s/.*/  \"version\": \"$version\"/" /opt/discord/resources/build_info.json 2>/dev/null\033[0m \n"
+fi
+
 sudo sed -i "3s/.*/  \"version\": \"$version\"/" /opt/discord/resources/build_info.json 2>/dev/null
 codigoError=$?
 clear
